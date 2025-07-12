@@ -18,7 +18,7 @@ function Contact() {
     const onSubmit=async(data:formData)=>{
 
         try{
-        const responce=await axios.post("https://jsonplaceholder.typicode.com/posts",{
+        const responce=await axios.post(`https://jsonplaceholder.typicode.com/posts=${import.meta.env.VITE_API_KEY}`,{
             firstName:data.firstName,
             lastName:data.lastName,
             MobileNumber:data.MobileNumber,

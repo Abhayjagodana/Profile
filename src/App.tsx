@@ -3,10 +3,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router'
 import './App.css'
 import Header from './Pages/Header'
 import Home from './Pages/Home'
-import About from './Pages/About'
+// import About from './Pages/About'
 import Skill from './Pages/Skill'
 import Contact from './Pages/Contact'
 import Eduction from './Pages/Education'
+import React, { Suspense ,lazy} from 'react'
+
+const About = lazy(() => import("./Pages/About"));
 
 const router = createBrowserRouter([
   {
@@ -24,16 +27,19 @@ const router = createBrowserRouter([
     element:
       <div>
         <Header></Header>
-        <About></About>
+       <Suspense fallback={<div>Loading About Page...</div>}>
+        <About />
+      </Suspense>
       </div>
   },
-   {
+  {
 
     path: "/Skill",
     element:
       <div>
         <Header></Header>
-       <Skill></Skill>
+        <Skill></Skill>
+
       </div>
   },
   {
@@ -42,7 +48,7 @@ const router = createBrowserRouter([
     element:
       <div>
         <Header></Header>
-       <Contact></Contact>
+        <Contact></Contact>
       </div>
   },
   {
@@ -51,7 +57,7 @@ const router = createBrowserRouter([
     element:
       <div>
         <Header></Header>
-       <Eduction></Eduction>
+        <Eduction></Eduction>
       </div>
   }
 ])
