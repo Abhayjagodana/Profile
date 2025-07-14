@@ -3,8 +3,7 @@ User-agent:*
 Allow:/
 
 
-# Host
-Host: https://profile-v6hu.vercel.app/
+
 
 # Sitemaps
 Sitemap: https://profile-v6hu.vercel.app/sitemap.xml
