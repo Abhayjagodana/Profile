@@ -1,11 +1,11 @@
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
-type formData={
- firstName:string,
- lastName:string,
- MobileNumber:string,
- Email:string,
- Message:string
+type formData = {
+    firstName: string,
+    lastName: string,
+    MobileNumber: string,
+    Email: string,
+    Message: string
 }
 function Contact() {
     const {
@@ -15,24 +15,24 @@ function Contact() {
         formState: { errors },
     } = useForm<formData>();
 
-    const onSubmit=async(data:formData)=>{
+    const onSubmit = async (data: formData) => {
 
-        try{
-        const responce=await axios.post(`https://jsonplaceholder.typicode.com/posts=${import.meta.env.VITE_API_KEY}`,{
-            firstName:data.firstName,
-            lastName:data.lastName,
-            MobileNumber:data.MobileNumber,
-            Email:data.Email,
-            Message:data.Message
-        });
-        console.log(responce.data)
-        alert("Message Sent Succesfully");
-        reset();
-    }
-    catch(error){
+        try {
+            const responce = await axios.post(`https://jsonplaceholder.typicode.com/posts=${import.meta.env.VITE_API_KEY}`, {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                MobileNumber: data.MobileNumber,
+                Email: data.Email,
+                Message: data.Message
+            });
+            console.log(responce.data)
+            alert("Message Sent Succesfully");
+            reset();
+        }
+        catch (error) {
             console.log(error);
             alert("Faill Your Message");
-    }
+        }
     }
     return (
         <div>
@@ -117,16 +117,16 @@ function Contact() {
                                 id="email"
                                 type="text"
                                 placeholder="Enter your email"
-                                {...register('Email',{
-                                    required:{value:true,message:"Please Enter Fill"},
-                                    pattern:{value:/^[^\s@]+@[^\s@]+\.[^\s@]+$/ , message:"Enter a valid email address"}
+                                {...register('Email', {
+                                    required: { value: true, message: "Please Enter Fill" },
+                                    pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Enter a valid email address" }
 
                                 })}
                                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                             {errors.Email?.message && (
-                                        <p className="text-red-500 text-sm flex justify-center">{String(errors.Email.message)}</p>
-                                    )}
+                                <p className="text-red-500 text-sm flex justify-center">{String(errors.Email.message)}</p>
+                            )}
                         </div>
 
                         <div>
@@ -136,16 +136,16 @@ function Contact() {
                             <textarea
                                 id="message"
                                 placeholder="Your message"
-                                {...register('Message',{
-                                    required:{value:true,message:"Please Enter Fill"},
-                                    minLength:{value:5,message:"MinLength At Least 5"}
+                                {...register('Message', {
+                                    required: { value: true, message: "Please Enter Fill" },
+                                    minLength: { value: 5, message: "MinLength At Least 5" }
                                 })}
                                 rows={4}
                                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             ></textarea>
-                             {errors.Message?.message && (
-                                        <p className="text-red-500 text-sm flex justify-center">{String(errors.Message.message)}</p>
-                                    )}
+                            {errors.Message?.message && (
+                                <p className="text-red-500 text-sm flex justify-center">{String(errors.Message.message)}</p>
+                            )}
                         </div>
 
                         <button

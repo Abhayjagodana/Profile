@@ -6,6 +6,8 @@ import Home from './Pages/Home'
 // import About from './Pages/About'
 import Skill from './Pages/Skill'
 import Contact from './Pages/Contact'
+
+
 import Eduction from './Pages/Education'
 import React, { Suspense ,lazy} from 'react'
 
@@ -13,7 +15,7 @@ const About = lazy(() => import("./Pages/About"));
 
 const router = createBrowserRouter([
   {
-
+    
     path: "/",
     element:
       <div>
