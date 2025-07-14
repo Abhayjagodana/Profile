@@ -2,9 +2,6 @@
 User-agent:*
 Allow:/
 
-
-
-
 # Sitemaps
 Sitemap: https://profile-v6hu.vercel.app/sitemap.xml
 Sitemap: https://profile-v6hu.vercel.app/About/sitemap.xml
