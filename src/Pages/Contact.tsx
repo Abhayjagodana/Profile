@@ -23,7 +23,7 @@ function Contact() {
     const onSubmit = async (data: formData) => {
 
         try {
-            const responce = await axios.post(`${import.meta.env.VITE_API_URL}`, {
+            const responce = await axios.post(`https://jsonplaceholder.typicode.com/posts`, {
                 firstName: data.firstName,
                 lastName: data.lastName,
                 MobileNumber: data.MobileNumber,
@@ -78,14 +78,14 @@ function Contact() {
                                     id="name"
                                     type="text"
                                     placeholder="Enter your Lastname"
-                                    {...register('lastName',
+                                    {...register('lastName', 
                                         {
-                                            required: { value: true, message: "Please Enter Fill" },
-                                            minLength: { value: 3, message: "MinLength At Least 3" },
-                                            maxLength: { value: 10, message: "MaxLength At Least 10" },
-                                            pattern: { value: /^[A-Za-z\s]+$/, message: "Only letters are allowed" }
-                                        }
-                                    )}
+                                        required: { value: true, message: "Please Enter Fill" },
+                                        minLength: { value: 3, message: "MinLength At Least 3" },
+                                        maxLength: { value: 10, message: "MaxLength At Least 10" },
+                                        pattern: { value: /^[A-Za-z\s]+$/, message: "Only letters are allowed" }
+                                    }
+                                )}
                                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                                 {errors.lastName?.message && (
@@ -102,12 +102,12 @@ function Contact() {
                                         id="name"
                                         type="text"
                                         placeholder="Enter your Mobile-Number"
-                                        {...register('MobileNumber',
+                                        {...register('MobileNumber', 
                                             {
-                                                required: { value: true, message: "Please Enter Fill" },
-                                                pattern: { value: /^[6-9]\d{9}$/, message: "Enter a valid 10-digit mobile number" }
-                                            }
-                                        )}
+                                            required: { value: true, message: "Please Enter Fill" },
+                                            pattern: { value: /^[6-9]\d{9}$/, message: "Enter a valid 10-digit mobile number" }
+                                        }
+                                    )}
                                         className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                                     />
                                     {errors.MobileNumber?.message && (
@@ -127,12 +127,12 @@ function Contact() {
                                 type="text"
                                 placeholder="Enter your email"
                                 {...register('Email',
-                                    {
-                                        required: { value: true, message: "Please Enter Fill" },
-                                        pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Enter a valid email address" }
+                                     {
+                                    required: { value: true, message: "Please Enter Fill" },
+                                    pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Enter a valid email address" }
 
-                                    }
-                                )}
+                                }
+                            )}
                                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             />
                             {errors.Email?.message && (
@@ -148,11 +148,11 @@ function Contact() {
                                 id="message"
                                 placeholder="Your message"
                                 {...register('Message',
-                                    {
-                                        required: { value: true, message: "Please Enter Fill" },
-                                        minLength: { value: 5, message: "MinLength At Least 5" }
-                                    }
-                                )}
+                                     {
+                                    required: { value: true, message: "Please Enter Fill" },
+                                    minLength: { value: 5, message: "MinLength At Least 5" }
+                                }
+                            )}
                                 rows={4}
                                 className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                             ></textarea>
