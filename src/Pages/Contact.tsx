@@ -2,11 +2,13 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { Helmet } from 'react-helmet';
 
 
 const contactschema = z.object({
     firstName: z
         .string()
+        .nonempty("*Please enter your First Name") 
         .min(3, "*MinLength At least 3 ")
         .max(10, "*MaxLength At least 10 ")
         .regex(/^[A-Za-z\s]+$/, 'Only letters are allowed'),
@@ -40,13 +42,13 @@ function Contact() {
         formState: { errors },
     } = useForm<formData>({
         resolver: zodResolver(contactschema),
-        defaultValues: {
-            firstName: '',
-            lastName: '',
-            MobileNumber: '',
-            Email: '',
-            Message: ''
-        }
+        // defaultValues: {
+        //     firstName: '',
+        //     lastName: '',
+        //     MobileNumber: '',
+        //     Email: '',
+        //     Message: ''
+        // }
     })
 
     const onSubmit = async (data: formData) => {
@@ -70,6 +72,12 @@ function Contact() {
     }
     return (
         <div>
+
+             <Helmet>
+        <title>Contact | Abhi Profile</title>
+        
+      </Helmet>
+
             <div className="min-h-screen  flex items-center justify-center px-4 py-10">
                 <div className="w-full max-w-xl bg-white shadow-lg rounded-xl p-6 sm:p-10">
                     <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">Contact Us</h2>
