@@ -11,7 +11,7 @@ function About() {
         <div className="bg-white shadow-lg rounded-xl p-6 md:p-10">
           <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">About Me</h1>
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-            Hello! I'm <span className="font-semibold text-blue-600">Abhi Jagodana</span>, a frontend developer skilled in HTML, CSS, JavaScript, React JS, TypeScript, and Tailwind CSS.
+            Hello! I'm <span className="font-semibold text-blue-600">Abhi Jagodana</span>, a frontend developer 
           </p>
           <p className="text-sm sm:text-base text-gray-600 mt-4 leading-relaxed">
             I enjoy working with modern tools like <strong>React</strong> and <strong>Tailwind CSS</strong>. Always learning, always building.
