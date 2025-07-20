@@ -1,33 +1,36 @@
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
-import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 
-// Schema definition
-const contactSchema = z.object({
+
+const contactschema = z.object({
     firstName: z
         .string()
-        .min(3, 'First Name must be at least 3 characters')
-        .max(10, 'First Name must not exceed 10 characters')
+        .min(3, "*MinLength At least 3 ")
+        .max(10, "*MaxLength At least 10 ")
         .regex(/^[A-Za-z\s]+$/, 'Only letters are allowed'),
+
     lastName: z
         .string()
-        .min(3, 'Last Name must be at least 3 characters')
-        .max(10, 'Last Name must not exceed 10 characters')
+        .min(3, "*MinLength At least 3 ")
+        .max(10, "*MaxLength At least 10 ")
         .regex(/^[A-Za-z\s]+$/, 'Only letters are allowed'),
+
     MobileNumber: z
         .string()
         .regex(/^[6-9]\d{9}$/, 'Enter a valid 10-digit mobile number'),
+
     Email: z
         .string()
         .email('Enter a valid email address'),
+
     Message: z
         .string()
-        .min(5, 'Message must be at least 5 characters'),
+        .min(5, 'MinLength At least 5'),
 });
 
-// Infer TypeScript type from Zod
-type ContactFormData = z.infer<typeof contactSchema>;
+type formData = z.infer<typeof contactschema>
 
 function Contact() {
     const {
@@ -35,135 +38,168 @@ function Contact() {
         handleSubmit,
         reset,
         formState: { errors },
-    } = useForm<ContactFormData>({
-        resolver: zodResolver(contactSchema),
+    } = useForm<formData>({
+        resolver: zodResolver(contactschema),
         defaultValues: {
             firstName: '',
             lastName: '',
             MobileNumber: '',
             Email: '',
-            Message: '',
-        },
-    });
+            Message: ''
+        }
+    })
 
-    const onSubmit = async (data: ContactFormData) => {
+    const onSubmit = async (data: formData) => {
+
         try {
-            const response = await axios.post(`https://jsonplaceholder.typicode.com/${import.meta.env.VITE_API_URL}`, {
+            const responce = await axios.post(`https://jsonplaceholder.typicode.com/${import.meta.env.VITE_API_URL}`, {
                 firstName: data.firstName,
                 lastName: data.lastName,
                 MobileNumber: data.MobileNumber,
                 Email: data.Email,
                 Message: data.Message
             });
-            console.log(response.data);
-            alert('Message Sent Successfully');
+            console.log(responce.data)
+            alert("Message Sent Succesfully");
             reset();
-        } catch (error) {
-            console.error(error);
-            alert('Failed to send your message');
         }
-    };
-
+        catch (error) {
+            console.log(error);
+            alert("Faill Your Message");
+        }
+    }
     return (
-        <div className="min-h-screen flex items-center justify-center px-4 py-10">
-            <div className="w-full max-w-xl bg-white shadow-lg rounded-xl p-6 sm:p-10">
-                <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">Contact Us</h2>
-                <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
-                    {/* First Name */}
-                    <div>
-                        <label htmlFor="firstName" className="block mb-1 text-gray-700 font-medium">
-                            First Name
-                        </label>
-                        <input
-                            id="firstName"
-                            type="text"
-                            placeholder="Enter your name"
-                            {...register('firstName')}
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                        {errors.firstName && (
-                            <p className="text-red-500 text-sm flex justify-center">{errors.firstName.message}</p>
-                        )}
-                    </div>
+        <div>
+            <div className="min-h-screen  flex items-center justify-center px-4 py-10">
+                <div className="w-full max-w-xl bg-white shadow-lg rounded-xl p-6 sm:p-10">
+                    <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">Contact Us</h2>
+                    <form className="space-y-5" onSubmit={handleSubmit(onSubmit)}>
+                        <div>
+                            <label htmlFor="name" className="block mb-1 text-gray-700 font-medium">
+                                FirstName
+                            </label>
+                            <input
+                                id="name"
+                                type="text"
+                                placeholder="Enter your name"
+                                {...register('firstName',
+                                    // {
+                                    //     required: { value: true, message: "*please Enter Fill" },
+                                    //     maxLength: { value: 10, message: "*maxlength At least 10 " },
+                                    //     minLength: { value: 3, message: "*MinLength At least 3" },
+                                    //     pattern: { value: /^[A-Za-z\s]+$/, message: "Only letters are allowed" }
+                                    // }
 
-                    {/* Last Name */}
-                    <div>
-                        <label htmlFor="lastName" className="block mb-1 text-gray-700 font-medium">
-                            Last Name
-                        </label>
-                        <input
-                            id="lastName"
-                            type="text"
-                            placeholder="Enter your Last Name"
-                            {...register('lastName')}
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                        {errors.lastName && (
-                            <p className="text-red-500 text-sm flex justify-center">{errors.lastName.message}</p>
-                        )}
-                    </div>
+                                )}
+                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            {errors.firstName?.message && (
+                                <p className="text-red-500 text-sm flex justify-center">{String(errors.firstName.message)}</p>
+                            )}
+                        </div>
 
-                    {/* Mobile Number */}
-                    <div>
-                        <label htmlFor="MobileNumber" className="block mb-1 text-gray-700 font-medium">
-                            Mobile Number
-                        </label>
-                        <input
-                            id="MobileNumber"
-                            type="text"
-                            placeholder="Enter your Mobile Number"
-                            {...register('MobileNumber')}
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                        {errors.MobileNumber && (
-                            <p className="text-red-500 text-sm flex justify-center">{errors.MobileNumber.message}</p>
-                        )}
-                    </div>
+                        <div>
+                            <div>
+                                <label htmlFor="name" className="block mb-1 text-gray-700 font-medium">
+                                    LastName
+                                </label>
+                                <input
+                                    id="name"
+                                    type="text"
+                                    placeholder="Enter your Lastname"
+                                    {...register('lastName',
+                                        // {
+                                        //     required: { value: true, message: "Please Enter Fill" },
+                                        //     minLength: { value: 3, message: "MinLength At Least 3" },
+                                        //     maxLength: { value: 10, message: "MaxLength At Least 10" },
+                                        //     pattern: { value: /^[A-Za-z\s]+$/, message: "Only letters are allowed" }
+                                        // }
+                                    )}
+                                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                                {errors.lastName?.message && (
+                                    <p className="text-red-500 text-sm flex justify-center">{String(errors.lastName.message)}</p>
+                                )}
+                            </div>
 
-                    {/* Email */}
-                    <div>
-                        <label htmlFor="Email" className="block mb-1 text-gray-700 font-medium">
-                            Email
-                        </label>
-                        <input
-                            id="Email"
-                            type="text"
-                            placeholder="Enter your Email"
-                            {...register('Email')}
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                        {errors.Email && (
-                            <p className="text-red-500 text-sm flex justify-center">{errors.Email.message}</p>
-                        )}
-                    </div>
+                            <div>
+                                <div>
+                                    <label htmlFor="name" className="block mb-1 text-gray-700 font-medium">
+                                        Mobile-Number
+                                    </label>
+                                    <input
+                                        id="name"
+                                        type="text"
+                                        placeholder="Enter your Mobile-Number"
+                                        {...register('MobileNumber',
+                                            // {
+                                            //     required: { value: true, message: "Please Enter Fill" },
+                                            //     pattern: { value: /^[6-9]\d{9}$/, message: "Enter a valid 10-digit mobile number" }
+                                            // }
+                                        )}
+                                        className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    />
+                                    {errors.MobileNumber?.message && (
+                                        <p className="text-red-500 text-sm flex justify-center">{String(errors.MobileNumber.message)}</p>
+                                    )}
+                                </div>
 
-                    {/* Message */}
-                    <div>
-                        <label htmlFor="Message" className="block mb-1 text-gray-700 font-medium">
-                            Message
-                        </label>
-                        <textarea
-                            id="Message"
-                            rows={4}
-                            placeholder="Your message"
-                            {...register('Message')}
-                            className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        ></textarea>
-                        {errors.Message && (
-                            <p className="text-red-500 text-sm flex justify-center">{errors.Message.message}</p>
-                        )}
-                    </div>
+                                <div>
 
-                    <button
-                        type="submit"
-                        className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200"
-                    >
-                        Send Message
-                    </button>
-                </form>
+                                </div>
+                            </div>
+                            <label htmlFor="email" className="block mb-1 text-gray-700 font-medium">
+                                Email
+                            </label>
+                            <input
+                                id="email"
+                                type="text"
+                                placeholder="Enter your email"
+                                {...register('Email',
+                                    // {
+                                    //     required: { value: true, message: "Please Enter Fill" },
+                                    //     pattern: { value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/, message: "Enter a valid email address" }
+
+                                    // }
+                                )}
+                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            {errors.Email?.message && (
+                                <p className="text-red-500 text-sm flex justify-center">{String(errors.Email.message)}</p>
+                            )}
+                        </div>
+
+                        <div>
+                            <label htmlFor="message" className="block mb-1 text-gray-700 font-medium">
+                                Message
+                            </label>
+                            <textarea
+                                id="message"
+                                placeholder="Your message"
+                                {...register('Message',
+                                    // {
+                                    //     required: { value: true, message: "Please Enter Fill" },
+                                    //     minLength: { value: 5, message: "MinLength At Least 5" }
+                                    // }
+                                )}
+                                rows={4}
+                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            ></textarea>
+                            {errors.Message?.message && (
+                                <p className="text-red-500 text-sm flex justify-center">{String(errors.Message.message)}</p>
+                            )}
+                        </div>
+
+                        <button
+                            type="submit"
+                            className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition duration-200"
+                        >
+                            Send Message
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
-    );
+    )
 }
-
-export default Contact;
+export default Contact
