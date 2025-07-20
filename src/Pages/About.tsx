@@ -10,8 +10,9 @@ function About() {
         {/* About Box */}
         <div className="bg-white shadow-lg rounded-xl p-6 md:p-10">
           <h1 className="text-2xl sm:text-3xl font-bold mb-4 text-gray-800">
-  About Abhi Jagodana – Frontend Developer
+  About Abhi Jagodana – Frontend Developer & UI Enthusiast
 </h1>
+
 
         </div>
 
